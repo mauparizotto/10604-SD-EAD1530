@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" name="IPizzariaBackendControllerservice" targetNamespace="http://tempuri.org/" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns1="urn:UPizzaTamanhoEnum" xmlns:ns2="urn:UPizzaSaborEnum" xmlns:ns3="urn:UPedidoRetornoDTOImpl">
+  <types>
+    <xs:schema targetNamespace="urn:UPizzaTamanhoEnum" xmlns="urn:UPizzaTamanhoEnum">
+      <xs:simpleType name="TPizzaTamanhoEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="enPequena"/>
+          <xs:enumeration value="enMedia"/>
+          <xs:enumeration value="enGrande"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="urn:UPizzaSaborEnum" xmlns="urn:UPizzaSaborEnum">
+      <xs:simpleType name="TPizzaSaborEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="enCalabresa"/>
+          <xs:enumeration value="enMarguerita"/>
+          <xs:enumeration value="enPortuguesa"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="urn:UPedidoRetornoDTOImpl" xmlns="urn:UPedidoRetornoDTOImpl">
+      <xs:complexType name="TPedidoRetornoDTO">
+        <sequence xmlns="http://www.w3.org/2001/XMLSchema"/>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="efetuarPedido0Request">
+    <part name="APizzaTamanho" type="ns1:TPizzaTamanhoEnum"/>
+    <part name="APizzaSabor" type="ns2:TPizzaSaborEnum"/>
+  </message>
+  <message name="efetuarPedido0Response">
+    <part name="return" type="ns3:TPedidoRetornoDTO"/>
+  </message>
+  <portType name="IPizzariaBackendController">
+    <operation name="efetuarPedido">
+      <input message="tns:efetuarPedido0Request"/>
+      <output message="tns:efetuarPedido0Response"/>
+    </operation>
+  </portType>
+  <binding name="IPizzariaBackendControllerbinding" type="tns:IPizzariaBackendController">
+    <binding xmlns="http://schemas.xmlsoap.org/wsdl/soap/" style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="efetuarPedido">
+      <operation xmlns="http://schemas.xmlsoap.org/wsdl/soap/" soapAction="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido" style="rpc"/>
+      <input>
+        <body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController"/>
+      </input>
+      <output>
+        <body xmlns="http://schemas.xmlsoap.org/wsdl/soap/" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="IPizzariaBackendControllerservice">
+    <port name="IPizzariaBackendControllerPort" binding="tns:IPizzariaBackendControllerbinding">
+      <address xmlns="http://schemas.xmlsoap.org/wsdl/soap/" location="http://localhost:8080/soap/IPizzariaBackendController"/>
+    </port>
+  </service>
+</definitions>
+
