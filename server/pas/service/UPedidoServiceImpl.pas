@@ -16,6 +16,7 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
+    function ConsultaPedido(const ADocumentoCliente: String): TPedidoRetornoDTO;
 
     constructor Create; reintroduce;
   end;
@@ -76,7 +77,27 @@ begin
   oCodigoCliente := FClienteService.adquirirCodigoCliente(ADocumentoCliente);
 
   FPedidoRepository.efetuarPedido(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo, oCodigoCliente);
+
   Result := TPedidoRetornoDTO.Create(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo);
 end;
+
+
+
+function TPedidoService.ConsultaPedido(const ADocumentoCliente: String)
+  : TPedidoRetornoDTO;
+var
+  oValorPedido: Currency;
+  oTempoPreparo: Integer;
+  oPizzaTamanho: TPizzaTamanhoEnum;
+  oPizzaSabor : TPizzaSaborEnum;
+begin
+  //Consulta Pedido
+  FPedidoRepository.ConsultaPedidoP(oPizzaTamanho, oPizzaSabor, oValorPedido, oTempoPreparo, StrToInt(ADocumentoCliente));
+
+  //Retorna dados
+  Result := TPedidoRetornoDTO.Create(oPizzaTamanho, oPizzaSabor, oValorPedido, oTempoPreparo);
+end;
+
+
 
 end.
